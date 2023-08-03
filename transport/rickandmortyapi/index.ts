@@ -14,7 +14,7 @@ export default class RickAndMortyAPITransport extends Transport {
      * @param endpoint - the endpoint to make the request to
      * @returns the response data, which is an array of entities
      */
-    public async getAll<Entity>(endpoint: string): Promise<Entity[] | null> {
+    public async getAll<Entity>(endpoint: string): Promise<GetAllResponse<Entity> | null> {
             const response = await this.get<GetAllResponse<Entity>>(endpoint);
             /**
              * If the response is null, return null
@@ -22,7 +22,7 @@ export default class RickAndMortyAPITransport extends Transport {
             if (!response) {
                 return null;
             }
-            return response.results;
+            return response;
     }
 
     /**
