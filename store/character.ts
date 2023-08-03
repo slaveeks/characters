@@ -11,6 +11,7 @@ export const useCharacterStore = defineStore( {
             endpoint: '/character',
             characters: [] as Character[],
             page: 1,
+            allCharactersLoaded: false,
         }
     },
     getters: {
@@ -18,17 +19,24 @@ export const useCharacterStore = defineStore( {
     },
     actions: {
         async loadCharactersList() {
+            if (this.allCharactersLoaded) {
+                return;
+            }
             const charactersFromApi = await api.getAll<Character>(this.endpoint + `?page=${this.page}`);
 
             if (charactersFromApi) {
                 this.characters.push(...charactersFromApi.results);
             }
 
+            if (charactersFromApi?.info.next === null) {
+                this.allCharactersLoaded = true;
+            }
+
             this.page++;
         },
     },
     persist: {
-        paths: ['characters', 'currentCharacter', 'page'],
+        paths: ['characters', 'currentCharacter', 'page', 'allCharactersLoaded'],
         storage: localStorage
     }
 });

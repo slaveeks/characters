@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card">
     <div>
       {{ name }}
     </div>
@@ -23,5 +23,10 @@ const props = defineProps({
 </script>
 
 <style scoped>
-
+.card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+}
 </style>
