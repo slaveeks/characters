@@ -1,6 +1,6 @@
 <template>
   <div v-for="character in getCharacters" :key="character.id">
-    <CharacterCard :id="character.id" :name="character.name" :species="character.species" :episodes="character.episodes" />
+    <CharacterCard :id="character.id" :name="character.name" :species="character.species" :episodes="character.episode.slice(0, 5)" />
   </div>
 </template>
 

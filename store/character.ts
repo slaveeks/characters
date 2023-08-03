@@ -12,6 +12,7 @@ export const useCharacterStore = defineStore( {
             characters: [] as Character[],
             page: 1,
             allCharactersLoaded: false,
+            currentCharacter: null as Character | null,
         }
     },
     getters: {
@@ -34,6 +35,15 @@ export const useCharacterStore = defineStore( {
 
             this.page++;
         },
+        async loadCharacter(id: number) {
+            const characterFromStore = this.characters.find(character => character.id === id);
+            if (characterFromStore) {
+                this.currentCharacter = characterFromStore;
+                return;
+            }
+
+            this.currentCharacter =  await api.getOne<Character>(this.endpoint + `/${id}`);
+        }
     },
     persist: {
         paths: ['characters', 'currentCharacter', 'page', 'allCharactersLoaded'],
