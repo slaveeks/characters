@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <NuxtLink to="/characters">Characters</NuxtLink>
-  </div>
-  <div>
-    <NuxtLink to="/locations">Locations</NuxtLink>
-  </div>
-  <div>
-    <NuxtLink to="/episodes">Episodes</NuxtLink>
+  <div v-for="character in characters" :key="character.id">
+    <CharacterCard :id="character.id" :name="character.name" :species="character.species" :episodes="character.episodes" />
   </div>
 </template>
 
 <script setup>
+import { useCharacterStore } from '@/store/character';
+const { loadCharactersList, characters, loadCharacterById, currentCharacter } = useCharacterStore();
+await loadCharactersList()
+console.log(characters);
 </script>
 
 <style scoped>
