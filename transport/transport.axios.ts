@@ -23,8 +23,7 @@ export default class Transport {
     public async get<T>(endpoint: string): Promise<T | null> {
         try {
             const response = await axios.get<T>(`${this.baseURL}${endpoint}`);
-            const data = response.data as any;
-            return data.results;
+            return response.data;
 
         } catch (e) {
             console.error(e);
