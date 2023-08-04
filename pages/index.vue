@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import infinitescroll from "~/utils/infinitescroll";
+import infiniteScroll from "~/utils/infiniteScroll";
 import { useCharacterStore } from '@/store/character';
 
 /**
@@ -74,7 +74,7 @@ onMounted(() => {
 });
 
 /**
- * Callback for searching charactres
+ * Callback for searching characters
  */
 function searchCharacters() {
   /**
@@ -85,7 +85,7 @@ function searchCharacters() {
   /**
    * Redefine infinite scroll with new method
    */
-  infinitescroll(loadMoreCharacters(searchQuery.value, selected.value));
+  infiniteScroll(loadMoreCharacters(searchQuery.value, selected.value));
 }
 </script>
 
