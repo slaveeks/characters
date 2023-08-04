@@ -6,7 +6,6 @@ export enum Status {
     Dead = 'Dead',
     Unknown = 'unknown'
 }
-
 /**
  * Character interface
  */

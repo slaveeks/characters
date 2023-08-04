@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <div>
+    <NuxtLink :to="link">
       {{ name }}
-    </div>
+    </NuxtLink>
     <div>
     {{ species }}
     </div>
@@ -23,6 +23,7 @@ const props = defineProps({
   episodes: {
     type: Array,
   },
+  link: String
 })
 </script>
 

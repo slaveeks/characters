@@ -3,7 +3,7 @@
   <Select v-model="selected" :options="options"/>
   <button @click="searchCharacters">Search</button>
   <div v-for="character in characters" :key="character.id">
-    <CharacterCard :id="character.id" :name="character.name" :status="character.status" :episodes="character.episode.slice(0, 5)" />
+    <CharacterCard :id="character.id" :name="character.name" :status="character.status" :episodes="character.episode.slice(0, 5)" :link="'/characters/'+character.id" />
   </div>
 </template>
 

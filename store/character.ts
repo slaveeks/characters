@@ -59,6 +59,9 @@ export const useCharacterStore = defineStore( {
             this.page++;
         },
         async loadCharacter(id: number) {
+            if (this.currentCharacter && this.currentCharacter.id == id) {
+                return;
+            }
             const characterFromStore = this.characters.find(character => character.id === id);
             if (characterFromStore) {
                 this.currentCharacter = characterFromStore;
