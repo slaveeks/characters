@@ -18,11 +18,15 @@ export default class Transport {
      * Method for making HTTP GET requests
      *
      * @param endpoint - the endpoint to make the request to
+     * @param params - request params
      * @returns the response data
      */
-    public async get<T>(endpoint: string): Promise<T | null> {
+    public async get<T>(endpoint: string, params?: Record<string, string>): Promise<T | null> {
         try {
-            const response = await axios.get<T>(`${this.baseURL}${endpoint}`);
+            const searchParams = new URLSearchParams(params);
+            const response = await axios.get<T>(`${this.baseURL}${endpoint}`, {
+                params: searchParams
+            });
             return response.data;
         } catch (e) {
             console.error(e);

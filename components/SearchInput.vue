@@ -1,12 +1,21 @@
 <template>
-<div class="search-input">
-    <input type="text" :placeholder="placeholder" :value="modelValue"
+<div>
+    <input type="text"
+           :placeholder="placeholder"
+           :value="modelValue"
            @input="updateSearchQuery"/>
   </div>
 </template>
 
 <script setup>
+/**
+ * Define emits for updating model value
+ */
 const emit = defineEmits(['update:modelValue'])
+
+/**
+ * Define properties for search input component
+ */
 const props = defineProps({
   placeholder: {
     type: String,
@@ -18,11 +27,20 @@ const props = defineProps({
   }
 })
 
+/**
+ * Define search query from props
+ */
 let searchQuery = props.value;
 
+/**
+ * Update search query, will be called, when value changed
+ * @param event - input event
+ */
 function updateSearchQuery(event) {
+  /**
+   * Get updated search query from input
+   */
   searchQuery = event.target.value;
-  console.log(searchQuery);
   emit("update:modelValue", searchQuery);
 }
 

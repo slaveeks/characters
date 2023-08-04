@@ -16,7 +16,10 @@
 </template>
 
 <script setup>
-const props = defineProps({
+/**
+ * Define character card component properties
+ */
+defineProps({
   name: String,
   species: String,
   status: String,

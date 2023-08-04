@@ -12,11 +12,12 @@ export default class RickAndMortyAPITransport extends Transport {
     /**
      * Method for making HTTP GET requests to the Rick and Morty API and returning all entities
      * @param endpoint - the endpoint to make the request to
+     * @param params - request params
      * @returns the response data, which is an array of entities
      */
-    public async getAll<Entity>(endpoint: string): Promise<GetAllResponse<Entity> | null> {
+    public async getAll<Entity>(endpoint: string, params?: Record<string, string>): Promise<GetAllResponse<Entity> | null> {
         try {
-            return await this.get<GetAllResponse<Entity>>(endpoint);
+            return await this.get<GetAllResponse<Entity>>(endpoint, params);
         } catch (e: any) {
             console.error(e);
             return null;
