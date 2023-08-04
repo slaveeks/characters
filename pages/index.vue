@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import infinitescroll, {remove} from "~/utils/infinitescroll";
+import infinitescroll from "~/utils/infinitescroll";
 
 const searchQuery = ref('');
 
@@ -33,7 +33,6 @@ onMounted(() => {
 function searchCharacters() {
   console.log(characters);
   console.log();
-  remove();
   store.loadCharactersList(searchQuery.value);
   infinitescroll(loadMoreCharacters(searchQuery.value));
 }

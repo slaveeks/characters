@@ -15,7 +15,3 @@ export default function (load: () => void) {
         }
     }
 }
-
-export function remove() {
-    window.onscroll = null;
-}
