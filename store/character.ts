@@ -89,27 +89,49 @@ export const useCharacterStore = defineStore( {
                 return;
             }
 
-            if (charactersFromApi?.info.next === null) {
+            /**
+             * Check if there next page of characters
+             */
+            if (charactersFromApi.info.next === null) {
                 this.allCharactersLoaded = true;
                 return;
             }
             this.page++;
         },
+
+        /**
+         * Load one character, get from store, or update currentCharacter
+         * @param id - character unique identifier
+         */
         async loadCharacter(id: number) {
+            /**
+             * Check if current character is not empty in store, and check id, if it consists, stop action
+             */
             if (this.currentCharacter && this.currentCharacter.id == id) {
                 return;
             }
+
+            /**
+             * Get character by id from character[] store
+             */
             const characterFromStore = this.characters.find(character => character.id === id);
+
+            /**
+             * Updated current character, if it founded in character[], stop action
+             */
             if (characterFromStore) {
                 this.currentCharacter = characterFromStore;
                 return;
             }
 
+            /**
+             * Get character from api
+             */
             this.currentCharacter = await api.getOne<Character>(endpoint + `/${id}`);
         }
     },
     persist: {
         paths: ['characters', 'currentCharacter', 'page', 'allCharactersLoaded', 'nameFilter', 'statusFilter'],
-        storage: localStorage
+        storage: sessionStorage
     }
 });
