@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import Character from "~/entities/character";
+import Character, {Status} from "~/entities/character";
 import RickAndMortyAPITransport from "~/transport";
 
 const api = new RickAndMortyAPITransport();
@@ -13,9 +13,10 @@ export const useCharacterStore = defineStore( {
         allCharactersLoaded: false,
         currentCharacter: null as Character | null,
         nameFilter: "",
+        statusFilter: '',
     }),
     actions: {
-        async loadCharactersList(name: string) {
+        async loadCharactersList(name: string, status: Status) {
             if (name != this.nameFilter) {
                 this.nameFilter = name;
                 this.characters = [];
@@ -28,10 +29,22 @@ export const useCharacterStore = defineStore( {
                 a = `&name=${this.nameFilter}`;
             }
 
+            if (status != this.statusFilter) {
+                this.statusFilter = status;
+                this.characters = [];
+                this.page = 1;
+                this.allCharactersLoaded = false;
+            }
+
+            let b = '';
+            if (this.statusFilter) {
+                b = `&status=${this.statusFilter}`;
+            }
+
             if (this.allCharactersLoaded) {
                 return;
             }
-            const charactersFromApi = await api.getAll<Character>(this.endpoint + `/?page=${this.page}${a}`);
+            const charactersFromApi = await api.getAll<Character>(this.endpoint + `/?page=${this.page}${a}${b}`);
 
             if (charactersFromApi) {
                 this.characters.push(...charactersFromApi.results);
@@ -56,7 +69,7 @@ export const useCharacterStore = defineStore( {
         }
     },
     persist: {
-        paths: ['characters', 'currentCharacter', 'page', 'allCharactersLoaded', 'nameFilter'],
+        paths: ['characters', 'currentCharacter', 'page', 'allCharactersLoaded', 'nameFilter', 'statusFilter'],
         storage: localStorage
     }
 });

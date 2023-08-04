@@ -7,6 +7,9 @@
     {{ species }}
     </div>
     <div>
+    {{ status }}
+    </div>
+    <div>
     {{ episodes }}
     </div>
   </div>
@@ -16,9 +19,10 @@
 const props = defineProps({
   name: String,
   species: String,
+  status: String,
   episodes: {
     type: Array,
-  }
+  },
 })
 </script>
 
