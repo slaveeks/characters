@@ -1,23 +1,42 @@
 <template>
-  <div v-for="character in getCharacters" :key="character.id">
-    <CharacterCard :id="character.id" :name="character.name" :species="character.species" :episodes="character.episode.slice(0, 5)" />
+  <SearchInput placeholder='Find by name' v-model="searchQuery"/>
+  <button @click="searchCharacters">Search</button>
+  <div v-for="character in characters" :key="character.id">
+    <CharacterCard :id="character.id" :name="character.name" :episodes="character.episode.slice(0, 5)" />
   </div>
 </template>
 
 <script setup>
-import infinitescroll from "~/utils/infinitescroll";
+import infinitescroll, {remove} from "~/utils/infinitescroll";
 
-let page = 1;
+const searchQuery = ref('');
+
 import { useCharacterStore } from '@/store/character';
-const { getCharacters, loadCharactersList } = useCharacterStore();
+import SearchInput from "~/components/SearchInput.vue";
+const store = useCharacterStore();
 
-if (getCharacters.length === 0) {
-  loadCharactersList();
+const characters = computed(() => store.characters);
+
+if (characters.value.length === 0) {
+  store.loadCharactersList(searchQuery.value);
+}
+
+function loadMoreCharacters(value) {
+  return () => {
+    store.loadCharactersList(value);
+  }
 }
 
 onMounted(() => {
-  infinitescroll(loadCharactersList);
+  infinitescroll(loadMoreCharacters(searchQuery.value));
 });
+function searchCharacters() {
+  console.log(characters);
+  console.log();
+  remove();
+  store.loadCharactersList(searchQuery.value);
+  infinitescroll(loadMoreCharacters(searchQuery.value));
+}
 </script>
 
 <style scoped>

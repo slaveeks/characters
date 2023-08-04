@@ -24,7 +24,6 @@ export default class Transport {
         try {
             const response = await axios.get<T>(`${this.baseURL}${endpoint}`);
             return response.data;
-
         } catch (e) {
             console.error(e);
             return null;

@@ -15,14 +15,12 @@ export default class RickAndMortyAPITransport extends Transport {
      * @returns the response data, which is an array of entities
      */
     public async getAll<Entity>(endpoint: string): Promise<GetAllResponse<Entity> | null> {
-            const response = await this.get<GetAllResponse<Entity>>(endpoint);
-            /**
-             * If the response is null, return null
-             */
-            if (!response) {
-                return null;
-            }
-            return response;
+        try {
+            return await this.get<GetAllResponse<Entity>>(endpoint);
+        } catch (e: any) {
+            console.error(e);
+            return null;
+        }
     }
 
     /**
